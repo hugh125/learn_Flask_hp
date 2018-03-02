@@ -1,0 +1,17 @@
+1、	flask.ext.bootstrap导入失败？
+	使用flask_bootstrap 方式导入
+
+2、P49 404.html--导入templates/base后，不报错
+    L1: base.html --> bootstrap/base.html
+    L3: page_content --> content
+
+ch4.3
+    表单加载不出来
+    报错builtins.KeyError KeyError: 'A secret key is required to use CSRF.'
+
+    在 from flask_wtf import Form 下添加
+     app.config['SECRET_KEY'] = 'hugh_config_Key_string'
+
+ch5.5
+    添加
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
