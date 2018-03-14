@@ -1,9 +1,7 @@
-#https://www.cnblogs.com/liuzhen1995/p/8001040.html
 # -*- conding:utf-8 -*-
 
 import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -30,10 +28,3 @@ class User(db.Model):
 	role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 	def __repr__(self):
 		return '<User %r>' % self.username
-''''''
-if __name__ == '__main__':
-	pass
-
-	#db.drop_all()
-	#db.create_all()
-	#app.run(debug=True)
