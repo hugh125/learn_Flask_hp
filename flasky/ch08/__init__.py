@@ -1,1 +1,3 @@
-#u = User(email='hugh182@qq.com', username='hugh', password='123456')
+'''
+	https://github.com/miguelgrinberg/flasky/tree/8d
+'''
