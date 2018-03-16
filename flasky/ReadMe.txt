@@ -39,7 +39,11 @@
 文件删除		
 	git rm "file.txt" 从版本库中删除该文件
 		命令git rm用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失最近一次提交后你修改的内容。
-		
+###################################################################删除GiuHub上的文件夹，不删除本地		
+	git rm -r --cached dirName	# --cached不会把本地的dirName删除
+	git commit -m 'delete dir dirName'
+	git push -u origin master
+###################################################################		
 创建SSH Key。
 	ssh-keygen -t rsa -C "你自己的邮件地址"
 		在用户主目录下，看看有没有.ssh目录，
@@ -106,7 +110,16 @@ git checkout -m
 	
 配置文件：
 	.git/config	每个仓库的Git配置文件
-	.gitconfig	当前用户的Git配置文件	
+	.gitconfig	当前用户的Git配置文件
+	
+自动上传脚本 git_push.sh
+	# bash git_push.sh
+	# git remote add origin git@github.com:hugh125/learn_Flask_hp.git
+
+	git add *
+	git commit -m 'push_log'
+	git push origin master
+		
 		
 		
 		
