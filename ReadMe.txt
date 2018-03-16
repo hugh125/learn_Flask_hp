@@ -1,4 +1,4 @@
-# absh git_push.sh
+# bash git_push.sh
 
 git add *
 git commit -m 'push_log'
