@@ -43,7 +43,7 @@
 删除GiuHub上的文件夹，不删除本地		
 	git rm -r --cached dirName	# --cached不会把本地的dirName删除
 	git commit -m 'delete dir dirName'
-	git push -u origin master
+	git push origin master
 ###################################################################		
 创建SSH Key。
 	ssh-keygen -t rsa -C "你自己的邮件地址"
