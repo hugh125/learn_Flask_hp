@@ -1,34 +1,24 @@
 # -*- conding:utf-8 -*-
 
-import os
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import \
 	generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from . import login_manager
+from . import db, login_manager
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']=\
-	'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db = SQLAlchemy(app)
 
 class Role(db.Model):
 	__tablename__ = 'roles'	# 数据库里的表名
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), unique=True)
-	#default = db.Column(db.Boolean, default=False, index=True)
-	##permissions = db.Column(db.Integer)
+	default = db.Column(db.Boolean, default=False, index=True)
+	permissions = db.Column(db.Integer)
 	#users = db.relationship('User', backref='role', lazy='dynamic')
 
 	def __repr__(self):
 		return '<Role %r>' % self.name
 
-	'''
+	''''''
 	@staticmethod
 	def insert_roles():
 		roles = {
@@ -49,7 +39,7 @@ class Role(db.Model):
 			role.default = roles[r][1]
 			db.session.add(role)
 		db.session.commit()
-'''
+
 class User(UserMixin, db.Model):
 	__tablename__ = 'users'
 	id = db.Column(db.Integer, primary_key=True)
