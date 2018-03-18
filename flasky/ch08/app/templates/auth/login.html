@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}86 ｜ 第 8 章
+{% import "bootstrap/wtf.html" as wtf %}
 {% block title %}Flasky - Login{% endblock %}
 {% block page_content %}
 <div class="page-header">
@@ -7,5 +7,12 @@
 </div>
 <div class="col-md-4">
 {{ wtf.quick_form(form) }}
+-------------------------------------------------------------------------------
+<p>
+    New User?
+    <a href="{{ url_for('auth.register') }}">
+        Click here to register
+    </a>
+</p>
 </div>
 {% endblock %}
