@@ -103,6 +103,7 @@ class User(UserMixin, db.Model):
 			   (self.role.permissions & permissions) == permissions
 	def ping(self):
 		self.last_seen = datetime.utcnow()
+		#print(self.last_seen)
 		db.session.add(self)
 
 

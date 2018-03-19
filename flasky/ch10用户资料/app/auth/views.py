@@ -80,14 +80,19 @@ def resend_confirmation():
 
 @auth.before_app_request
 def before_request():
-    if current_user.is_authenticated \
-            and not current_user.confirmed \
-            and request.endpoint[:5] != 'auth.' \
-            and request.endpoint != 'static':
-        print(url_for('auth.unconfirmed'))
-        return redirect(url_for('auth.unconfirmed'))
+    # if current_user.is_authenticated \
+    #         and not current_user.confirmed \
+    #         and request.endpoint[:5] != 'auth.' \
+    #         and request.endpoint != 'static':
+    #     print(url_for('auth.unconfirmed'))
+    #     return redirect(url_for('auth.unconfirmed'))
+    print("%s, current_user.is_authenticated: %s" %(sys._getframe().f_lineno, current_user.is_authenticated))
+
     if current_user.is_authenticated:
         current_user.ping()
+        print("%s, current_user.confirmed: %s" %(sys._getframe().f_lineno, current_user.confirmed))
+        #print("%s, request.endpoint[:5]: %s" %(sys._getframe().f_lineno, request.endpoint[:5]))
+        flash(request.blueprint)
         if not current_user.confirmed and request.endpoint[:5] != 'auth.':
             return redirect(url_for('auth.unconfirmed'))
 
@@ -96,6 +101,7 @@ def unconfirmed():
     print('line:', sys._getframe().f_lineno)
     print('current_user.is_anonymous:', current_user.is_anonymous)
     print('current_user.confirmed:', current_user.confirmed)
+
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
     return render_template('auth/unconfirmed.html')
