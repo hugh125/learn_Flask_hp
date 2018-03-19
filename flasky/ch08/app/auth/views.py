@@ -37,13 +37,10 @@ def logout():
 def register():
     form = RegistrationForm()
     print()
-    print(__file__, form.email.data)
-    print(__file__, form.username.data)
-    print(__file__, form.password.data)
-    print(__file__, form.validate_on_submit())
     UserList = User.query.all()
     for u in UserList:
-        print(u.username, u.email, u.password, u.password_hash)
+        print("{'%s', '%s', '%s'}" % (u.username, u.email, u.myPwd))
+        #print("{username = '%s', email = '%s', password = '%s'}"              % (u.username, u.email, u.myPwd))
         if u.password_hash is None:
             db.session.delete(u)
         db.session.commit()
