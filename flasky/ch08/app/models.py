@@ -27,14 +27,15 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-	@property
-	def password(self):
-		raise AttributeError('password is not a readable attribute')
-	@password.setter
-	def password(self, password):
-		self.password_hash = generate_password_hash(password)
-	def verify_password(self, password):
-		return  check_password_hash(self.password_hash, password)
+
+    @property
+    def password(self):
+        AttributeError('password is not a readable attribute')
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+    def verify_password(self, password):
+        return  check_password_hash(self.password_hash, password)
 
     def generate_confirmation_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
@@ -48,9 +49,10 @@ class User(UserMixin, db.Model):
             return False
         if data.get('confirm') != self.id:
             return False
+        self.confirmed = True
         self.session.add(self)
         return True
 
 @login_manager.user_loader
 def load_user(user_id):
-	return User.query.get(int(user_id))
+    return User.query.get(int(user_id))
