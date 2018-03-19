@@ -86,14 +86,14 @@ def before_request():
     print(request.blueprint)
     print(request.endpoint)
     print(request.endpoint[:5])
-    print(current_user.confirmed)
+    # print(current_user.confirmed)
     if current_user.is_authenticated \
             and not current_user.confirmed \
             and request.endpoint[:5] != 'auth' \
             and request.endpoint != 'static':
         #return redirect(url_for('main.index'))
         print(url_for('auth.unconfirmed'))
-        return redirect(url_for('auth.unconfirmed'))
+        #return redirect(url_for('auth.unconfirmed'))
 
 @auth.route('/unconfirmed')
 def unconfirmed():
