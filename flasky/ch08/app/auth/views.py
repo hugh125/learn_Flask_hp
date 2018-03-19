@@ -3,9 +3,9 @@ from . import auth
 from .. import db
 from ..models import User
 from .forms import LoginForm, RegistrationForm
-from flask_login import login_user
-from flask_login import logout_user, login_required
+from flask_login import login_user, current_user, logout_user, login_required
 from ..email import send_email
+import sys
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -58,3 +58,48 @@ def register():
         #flash('You can now login')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
+
+@auth.route('/confirm/<token>')
+@login_required
+def confirm(token):
+    if current_user.confirmed:
+        return redirect(url_for('main.index'))
+    if current_user.confirm(token):
+        db.session.commit()
+        flash('You have confirm you account. Thanks!')
+    else:
+        flash('The confirmation link is invalid or has expried')
+    return  redirect(url_for('main.index'))
+
+@auth.route('/confirm')
+@login_required
+def resend_confirmation():
+    token = current_user.generate_confirmation_token()
+    send_email(current_user.email, 'Confirm Your Account',
+               'auth/email/confirm', user=current_user,token=token)
+    flash('A new confirmation email hash been sent to you by email.')
+    return redirect(url_for('auth.unconfirmed'))
+    return redirect(url_for('main.index'))
+
+@auth.before_app_request
+def before_request():
+    print(request.blueprint)
+    print(request.endpoint)
+    print(request.endpoint[:5])
+    print(current_user.confirmed)
+    if current_user.is_authenticated \
+            and not current_user.confirmed \
+            and request.endpoint[:5] != 'auth' \
+            and request.endpoint != 'static':
+        #return redirect(url_for('main.index'))
+        print(url_for('auth.unconfirmed'))
+        return redirect(url_for('auth.unconfirmed'))
+
+@auth.route('/unconfirmed')
+def unconfirmed():
+    print('line:', sys._getframe().f_lineno)
+    print('current_user.is_anonymous:', current_user.is_anonymous)
+    print('current_user.confirmed:', current_user.confirmed)
+    if current_user.is_anonymous or current_user.confirmed:
+        return redirect(url_for('main.index'))
+    return render_template('auth/unconfirmed.html')
