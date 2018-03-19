@@ -39,8 +39,8 @@ def register():
     print()
     UserList = User.query.all()
     for u in UserList:
-        print("{'%s', '%s', '%s'}" % (u.username, u.email, u.myPwd))
-        #print("{username = '%s', email = '%s', password = '%s'}"              % (u.username, u.email, u.myPwd))
+        print("%s:{'%s','%s','%s'}" % (u.id, u.username, u.email, u.myPwd))
+        #print("{username = '%s', email = '%s', password = '%s'}" % (u.username, u.email, u.myPwd))
         if u.password_hash is None:
             db.session.delete(u)
         db.session.commit()
