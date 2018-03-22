@@ -4,6 +4,7 @@ delte migrations data-dev.sqlite
 python manage.py db init
 python manage.py db migrate -m "initial migration"
 python manage.py db upgrade
+python manage.py runserver
 
 
 python manage.py shell
